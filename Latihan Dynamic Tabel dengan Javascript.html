@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic Table</title>
+	<title>Class List</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Link Bootstarp Css -->
+	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
+	<!-- Link Bootstrap Js -->
+	<script src="asset/js/jquery.min.js"></script>
+	<script src="asset/js/popper.min.js"></script>
+	<script src="asset/js/bootstrap.js"></script>
+	<script type="text/javascript">
+		var edit = false;
+		var indeks = 0;
+		function tambah() {
+			edit = false;
+			//mengosongkan form
+			document.getElementById('nama').value = "";
+			document.getElementById('jurusan').value = "";
+			document.getElementById('alamat').value = "";
+		}
+
+		function Edit(index) {
+			edit = true;
+			indeks = index;
+			var table = document.getElementById('tabel-siswa');
+			//mengambil data dari tabel
+			var nama = table.rows[index].cells[0].innerHTML;
+			var jurusan = table.rows[index].cells[1].innerHTML;
+			var alamat = table.rows[index].cells[2].innerHTML;
+
+			//memasukkan data ke form
+			document.getElementById('nama').value = nama;
+			document.getElementById('jurusan').value = jurusan;
+			document.getElementById('alamat').value = alamat;
+		}
+
+		function simpan() {
+			var table = document.getElementById('tabel-siswa');
+			//menampung data dari form
+			var nama = document.getElementById('nama').value;
+			var jurusan = document.getElementById('jurusan').value;
+			var alamat = document.getElementById('alamat').value;
+
+			//jika aksinya edit
+			if(edit){
+				table.rows[indeks].cells[0].innerHTML = nama;
+				table.rows[indeks].cells[1].innerHTML = jurusan;
+				table.rows[indeks].cells[2].innerHTML = alamat;
+			//jika aksinya tambah 
+			} else {
+				var element = "";
+				element += "<tr>";
+				element += "<td>" + nama + "</td>";
+				element += "<td>" + jurusan + "</td>";
+				element += "<td>" + alamat + "</td>";
+				element += "<td>";
+				element += '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" 	data-target="#modal" ';
+				element += 'onclick="Edit(this.parentElement.parentElement.rowIndex)">Edit</button>';
+				element += '<button type="button" class="btn btn-sm btn-danger" ';
+				element += 'onclick="hapus(this.parentElement.parentElement.rowIndex)">Hapus</button>';
+				table.innerHTML += element;
+			}
+		}
+
+		function hapus(indeks) {
+			var table = document.getElementById('tabel-siswa');
+			table.deleteRow(indeks);
+		}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<table class="table" id="tabel-siswa">
+			<thead>
+				<tr>
+					<th>Nama</th>
+					<th>Jurusan</th>
+					<th>Alamat</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Kevin</td>
+					<td>Rekayasa Perangkat Lunak</td>
+					<td>Malang</td>
+					<td>
+						<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal" onclick="Edit(this.parentElement.parentElement.rowIndex)">
+							Edit
+						</button>
+						<button type="button" class="btn btn-sm btn-danger" onclick="hapus(this.parentElement.parentElement.rowIndex)">
+							Hapus
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal" onclick="tambah()">
+			Tambah
+		</button>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal" id="modal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Form Modal</h4>
+					<span class="close" data-dismiss="modal">&times;</span>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Nama</label>
+						<div class="col-sm-12">
+							<input type="text" id="nama" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Jurusan</label>
+						<div class="col-sm-12">
+							<select class="form-control" id="jurusan">
+								<option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+								<option value="Teknik Komputer dan Jaringan">Teknik Komputer dan Jaringan</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Alamat</label>
+						<div class="col-sm-12">
+							<input type="text" id="alamat" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-success" data-dismiss="modal" onclick="simpan();">
+						Simpan
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

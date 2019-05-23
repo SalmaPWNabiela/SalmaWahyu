@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculator</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Link Bootstarp Css -->
+	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/index.css">
+	<!-- Link Bootstrap Js -->
+	<script src="asset/js/jquery.min.js"></script>
+	<script src="asset/js/popper.min.js"></script>
+	<script src="asset/js/bootstrap.js"></script>
+	<script type="text/javascript">
+		var temp = 0; //menyimpan angka sementara
+		var opr = ''; //menyimpan operasi sementara
+		//fungsi untuk menampilkan di layar
+		function tampil(number) {
+			var layar = document.getElementById('layar').value;
+			//jika dilayar masih kosong
+			//angka akan langsung ditambahkan
+			// number(..) digunakan untuk konversi ke tipe numerik
+			if(Number(layar) == 0){
+				document.getElementById('layar').value = number;
+			//jika dilayar ada isinya
+			//maka angka digabungkan
+			}else{
+				document.getElementById('layar').value += number;
+			}
+		}
+
+			function operasi(operator) {
+				//mengambil nilai dari display
+				var layar = document.getElementById('layar').value;
+				//jika nilai temp = 0
+				//maka akan diisi dengan nilai yang di display
+				if(temp == 0){
+					temp = Number(layar);
+				//jika nilai temp ada isinya
+				//maka nilai temp akan diolah sesuai oprator yg ada	
+				}else{
+					if(opr == '+'){
+						temp += Number(layar);
+					}
+					else if(opr == '-'){
+						temp -= Number(layar);
+					}
+					else if(opr == '*'){
+						temp *= Number(layar);
+					}
+					else if(opr == '/'){
+						if (Number(layar) == 0){
+							alert('Tidak bisa dibagi dengan 0');
+						}else{
+							temp /= Number(layar);
+						}
+					}
+				}
+
+				opr = operator;
+				//ketika tombol oprator diklik maka tampilan akan kosong
+				document.getElementById('layar').value = '';
+			}		
+
+			function hasil() {
+				// fungsi tombol = 
+				//memapilkan hasil perhitungan
+				var layar = document.getElementById('layar').value;
+				if(opr == '+'){
+					temp += Number(layar);
+					document.getElementById('layar').value = temp;
+				}
+				else if(opr == '-'){
+					temp -= Number(layar);
+					document.getElementById('layar').value = temp;
+				}
+				else if(opr == '*'){
+					temp *= Number(layar);
+					document.getElementById('layar').value = temp;
+				}
+				else if(opr == '/'){
+					if(Number(layar) == 0){
+						alert('Tidak bisa dibagi dengan 0')
+					}else{
+						temp /= Number(layar);
+						document.getElementById('layar').value = temp;
+					}
+				}
+			}
+
+			function reset() {
+				//mereset kalkulator
+				temp = 0;
+				document.getElementById('layar').value = "";
+			}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="col-sm-5">
+			<div class="card col-sm-12">
+				<div class="card-header bg-primary text-white text-center">
+					<h4>Calculator</h4>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="text" id="layar" class="form-control layar" readonly>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('1');">
+								<h3>1</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('4');">
+								<h3>4</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('7');">
+								<h3>7</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="reset();">
+								<h3>CE</h3>
+							</button>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('2');">
+								<h3>2</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('5');">
+								<h3>5</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('8');">
+								<h3>8</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('0');">
+								<h3>0</h3>
+							</button>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('3');">
+								<h3>3</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('6');">
+								<h3>6</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="tampil('9');">
+								<h3>9</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="hasil();">
+								<h3>=</h3>
+							</button>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" class="btn btn-primary btn-block" onclick="operasi('+');">
+								<h3>+</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="operasi('-')">
+								<h3>-</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="operasi('*')">
+								<h3>x</h3>
+							</button>
+							<button type="button" class="btn btn-primary btn-block" onclick="operasi('/');">
+								<h3>/</h3>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
